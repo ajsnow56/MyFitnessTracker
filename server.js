@@ -5,12 +5,9 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
-
-// const route = require("./public/api.js");
-// const exercise = require("./public/exercise.js");
-// const stats = require("./public/stats.js");
-
 const app = express();
+
+
 
 app.use(logger("dev"));
 
@@ -19,8 +16,13 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutsdb", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { 
+  useNewUrlParser: true, 
+  useFindAndModify: false,
+  useCreateIndex: true, });
 
+require("./routes/api-routes")(app);
+require("./routes/html-routes")(app);
 
 // Start the server
 app.listen(PORT, () => {
