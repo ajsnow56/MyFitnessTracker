@@ -56,7 +56,7 @@ app.get("/api/workouts/range", (req, res) => {
       },
     },
   ])
-  .sort({ day: -1 })
+  .sort({ _id: -1 })
   .limit(7)
       .then((dbWorkout) => {
         res.json(dbWorkout.reverse());
